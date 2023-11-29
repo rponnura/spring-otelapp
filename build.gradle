@@ -1,0 +1,36 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.3.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'com.jhooq.demo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web';
+	// Opentelemetry Manual Instrumentation START
+	// Importing dependencies for  Opentelemetry
+	implementation("io.opentelemetry:opentelemetry-api:1.32.0");
+	implementation("io.opentelemetry:opentelemetry-sdk:1.32.0");
+	implementation("io.opentelemetry:opentelemetry-sdk-metrics:1.32.0");
+	implementation("io.opentelemetry:opentelemetry-exporter-logging:1.32.0");
+	implementation("io.opentelemetry.semconv:opentelemetry-semconv:1.23.1-alpha");
+	//implementation("io.opentelemetry:opentelemetry-semconv:1.32.0-alpha");
+	// Enabling automatic configuration for dependency
+	implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:1.32.0");
+	implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi:1.32.0");
+	// Opentelemetry Manual Intrumentation STOP
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
