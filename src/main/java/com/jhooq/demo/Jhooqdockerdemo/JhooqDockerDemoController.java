@@ -39,6 +39,8 @@ public class JhooqDockerDemoController {
 		   measurement.record(getFreeMem(), Attributes.of(AttributeKey.stringKey("service"), "jhooq"));
 	   });
     /* END of manual intrumentation */
+    String jobLengthEnv = System.getenv("JOB_LENGTH");
+    int jobLength = Integer.parseInt(jobLengthEnv);
 
     // Add seprate counter for internal handling 
     private static final AtomicInteger requestCount = new AtomicInteger(0);
@@ -52,11 +54,11 @@ public class JhooqDockerDemoController {
 	// Exit Springboot after serving 100 request
         int count = requestCount.incrementAndGet();
 	System.out.println("Value of Counter is " + count );
-	if (count >= 100) {
+	if (count >= jobLength) {
 	   System.out.println("Attempting to exist the application after  " + count );
 //	   SpringApplication.exit(ctx, () -> 0);
 	   System.out.println("Spring App exited");
-	   System.exit(88);
+	   System.exit(0);
 	}
 	// End of application logic to exit after 100 requests
         return "Docker Demo - Hello Jhooq Service Manual Instrumentation";
